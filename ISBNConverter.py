@@ -25,25 +25,21 @@ def validate_isbn10(isbn10):
 
     # ISBN10 validation
     if len(isbn10) != 10:
-        print(isbn10, "is not ISBN10 obviously.")
-        sys.exit(0)
+        raise ValueError("{0} is not ISBN10 obviously.".format(isbn10))
 
     # check for isbn10[0:9] which is the first 9 numbers
     # Note: Strictly check the numbers.
     if not isbn10[:9].isdigit():
-        print("Error: Not a number is included in the 9 numbers.")
-        sys.exit(0)
+        raise ValueError("Error: Not a number is included in the 9 numbers.")
 
     # check for isbn10[9] which is the checkdigit
     # Note: Strictly check the number.
     if not (isbn10[9].isdigit() or isbn10[9] == 'X'):
-        print("Error: Not a number or X is included in the checkdigit.")
-        sys.exit(0)
+        raise ValueError("Error: Not a number or X is included in the checkdigit.")
 
     cdigit = calc_isbn10_checkdigit(isbn10)
     if cdigit != isbn10[9]:
-        print("Error: Invalid checkdigit.")
-        sys.exit(0)
+        raise ValueError("Error: Invalid checkdigit.")
 
     return True
 
@@ -75,45 +71,32 @@ def test():
     $ python -c "import ISBNConverter as c; c.test()"
 
     """
-    from unittest import mock
-
     #expect SUCCESS
     assert convert_isbn10_to_isbn13('4048686291') == '9784048686297'
 
     #expect length mismatch ERROR
-    with mock.patch('builtins.print'):
-        try:
-            convert_isbn10_to_isbn13('404868629100')
-        except SystemExit:
-            pass
-        print.assert_called_once_with(
-                '404868629100','is not ISBN10 obviously.')
+    try:
+        convert_isbn10_to_isbn13('404868629100')
+    except ValueError as e:
+        assert str(e) == '404868629100 is not ISBN10 obviously.'
 
     #expect almost number only ERROR
-    with mock.patch('builtins.print'):
-        try:
-            convert_isbn10_to_isbn13('4O48686291')
-        except SystemExit:
-            pass
-        print.assert_called_once_with(
-                'Error: Not a number is included in the 9 numbers.')
+    try:
+        convert_isbn10_to_isbn13('4O48686291')
+    except ValueError as e:
+        assert str(e) == 'Error: Not a number is included in the 9 numbers.'
 
     #expect ISBN10 check digit is number or X ERROR
-    with mock.patch('builtins.print'):
-        try:
-            convert_isbn10_to_isbn13('404868629Z')
-        except SystemExit:
-            pass
-        print.assert_called_once_with(
-                'Error: Not a number or X is included in the checkdigit.')
+    try:
+        convert_isbn10_to_isbn13('404868629Z')
+    except ValueError as e:
+        assert str(e) == 'Error: Not a number or X is included in the checkdigit.'
 
     #expect ISBN10 check digit ERROR
-    with mock.patch('builtins.print'):
-        try:
-            convert_isbn10_to_isbn13('4048686292')
-        except SystemExit:
-            pass
-        print.assert_called_once_with('Error: Invalid checkdigit.')
+    try:
+        convert_isbn10_to_isbn13('4048686292')
+    except ValueError as e:
+        assert str(e) == 'Error: Invalid checkdigit.'
 
     print('ok')
 
