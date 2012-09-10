@@ -65,6 +65,15 @@ def convert_isbn10_to_isbn13(isbn10):
     return isbn13
 
 
+def main(isbn10):
+    try:
+        isbn13 = convert_isbn10_to_isbn13(isbn10)
+        print("ISBN10:", isbn10)
+        print("ISBN13:", isbn13)
+    except ValueError as e:
+        print(str(e))
+
+
 def test():
     """run by
 
@@ -102,8 +111,4 @@ def test():
 
 
 if __name__ == '__main__':
-    isbn13 = convert_isbn10_to_isbn13(sys.argv[1])
-
-    # result output
-    print("ISBN10:", isbn10)
-    print("ISBN13:", isbn13)
+    main(sys.argv[1])
