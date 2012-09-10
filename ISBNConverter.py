@@ -22,6 +22,8 @@ def calc_isbn10_checkdigit(isbn10):
 
 def validate_isbn10(isbn10):
     """check the checkdigit"""
+    isbn10 = [char2digit(x) for x in isbn10]
+
     cdigit = calc_isbn10_checkdigit(isbn10)
     if cdigit != isbn10[9]:
         print("Error: Invalid checkdigit.")
@@ -53,8 +55,7 @@ def main(args):
         sys.exit(0)
 
     # calc and check the checkdigit
-    iisbn = [char2digit(x) for x in isbn]
-    validate_isbn10(iisbn)
+    validate_isbn10(isbn)
 
 
     # calc new(for ISBN13) checkdigit
