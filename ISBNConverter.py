@@ -60,10 +60,7 @@ def main(args):
     isbn12 = '978' + isbn[:9]
     ncdigit = 0
     for idx, x in enumerate(isbn12):
-        if idx % 2:
-            ncdigit += int(x) * 3
-        else:
-            ncdigit += int(x)
+        ncdigit += int(x) * (3 if (idx % 2) else 1)
 
     ncdigit = 10 - (ncdigit % 10)
 
