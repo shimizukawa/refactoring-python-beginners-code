@@ -59,10 +59,7 @@ def main(args):
 
     # calc new(for ISBN13) checkdigit
     isbn12 = '978' + isbn[:9]
-    ncdigit = 0
-    for x, y in zip(map(int, isbn12), cycle([1,3])):
-        ncdigit += x * y
-
+    ncdigit = sum(x * y for x, y in zip(map(int, isbn12), cycle([1,3])))
     ncdigit = 10 - (ncdigit % 10)
 
     # result output
