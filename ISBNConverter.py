@@ -47,8 +47,7 @@ def main(args):
         ncdigit += 3 * iisbn[idx * 2] + iisbn[idx * 2 + 1]
 
     ncdigit += 3 * iisbn[8]
-    ncdigit %= 10
-    ncdigit = 10 - ncdigit
+    ncdigit = 10 - (ncdigit % 10)
 
     # Convert int to String for ISBN13 checkdigit
     lastx = str(ncdigit)
