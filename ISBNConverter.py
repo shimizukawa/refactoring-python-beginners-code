@@ -6,6 +6,12 @@ LICENSE: GPLv3
 import sys
 
 
+def char2digit(x):
+    if x == 'X':
+        return 10
+    return int(x)
+
+
 def main(args):
     # remove '-' characters from args[0]
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
@@ -21,19 +27,15 @@ def main(args):
     if not isbn[:9].isdigit():
         print("Error: Not a number is included in the 9 numbers.")
         sys.exit(0)
-    iisbn = [int(x) for x in isbn[:9]]
 
     # check for isbn[9] which is the checkdigit
     # Note: Strictly check the number.
     if not (isbn[9].isdigit() or isbn[9] == 'X'):
         print("Error: Not a number or X is included in the checkdigit.")
         sys.exit(0)
-    if isbn[9] == 'X':
-        iisbn.append(10)
-    else:
-        iisbn.append(int(isbn[9]))
 
     # calc and check the checkdigit
+    iisbn = [char2digit(x) for x in isbn]
     cdigit = sum((10 - i) * x for i,x in enumerate(iisbn[:9]))
     cdigit = 11 - (cdigit % 11)
 
