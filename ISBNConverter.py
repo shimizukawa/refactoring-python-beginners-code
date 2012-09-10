@@ -49,12 +49,9 @@ def main(args):
     ncdigit += 3 * iisbn[8]
     ncdigit = 10 - (ncdigit % 10)
 
-    # Convert int to String for ISBN13 checkdigit
-    lastx = str(ncdigit)
-
     # result output
     print("ISBN10:", isbn);
-    print("ISBN13:", "978" + isbn[:9] + lastx)
+    print("ISBN13:", "978{0}{1}".format(isbn[:9], ncdigit))
 
 
 def test():
