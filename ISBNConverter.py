@@ -48,6 +48,13 @@ def validate_isbn10(isbn10):
     return True
 
 
+def make_isbn13_from_isbn10(isbn10):
+    """make new ISBN13 from ISBN10"""
+    isbn12 = '978' + isbn10[:9]
+    cdigit = calc_isbn13_checkdigit(isbn12)
+    return isbn12 + cdigit
+
+
 def main(args):
     # remove '-' characters from args[0]
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
@@ -56,11 +63,8 @@ def main(args):
     # calc and check the checkdigit
     validate_isbn10(isbn)
 
-
     # calc new(for ISBN13) checkdigit
-    isbn12 = '978' + isbn[:9]
-    cdigit = calc_isbn13_checkdigit(isbn12)
-    isbn13 = isbn12 + cdigit
+    isbn13 = make_isbn13_from_isbn10(isbn)
 
     # result output
     print("ISBN10:", isbn)
