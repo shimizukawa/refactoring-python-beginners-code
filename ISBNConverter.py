@@ -16,26 +16,22 @@ def main(args):
         print(isbn, "is not ISBN10 obviously.")
         sys.exit(0)
 
-    # String to char to int conversion
-    iisbn = [None] * 10;
-
-    # check for iisbn[0:9] which is the first 9 numbers
+    # check for isbn[0:9] which is the first 9 numbers
     # Note: Strictly check the numbers.
-    for idx in range(9):
-        if not isbn[idx].isdigit():
-            print("Error: Not a number is included in the 9 numbers.")
-            sys.exit(0)
-        iisbn[idx] = int(isbn[idx])
+    if not isbn[:9].isdigit():
+        print("Error: Not a number is included in the 9 numbers.")
+        sys.exit(0)
+    iisbn = [int(x) for x in isbn[:9]]
 
-    # check for iisbn[9] which is the checkdigit
+    # check for isbn[9] which is the checkdigit
     # Note: Strictly check the number.
+    if not (isbn[9].isdigit() or isbn[9] == 'X'):
+        print("Error: Not a number or X is included in the checkdigit.")
+        sys.exit(0)
     if isbn[9] == 'X':
-        iisbn[9] = 10
+        iisbn.append(10)
     else:
-        if not isbn[9].isdigit():
-            print("Error: Not a number or X is included in the checkdigit.")
-            sys.exit(0)
-        iisbn[9] = int(isbn[9])
+        iisbn.append(int(isbn[9]))
 
     # calc and check the checkdigit
     cdigit = 0;
