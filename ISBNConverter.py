@@ -67,5 +67,57 @@ def main(args):
     print("ISBN13:", "978" + isbn[:9] + lastx)
 
 
+def test():
+    """run by
+
+    $ python -c "import ISBNConverter as c; c.test()"
+
+    """
+    from unittest import mock
+
+    #expect SUCCESS
+    with mock.patch('builtins.print'):
+        main(['4048686291'])
+        print.assert_has_calls([mock.call('ISBN10:','4048686291'),
+                                mock.call('ISBN13:','9784048686297')])
+
+    #expect length mismatch ERROR
+    with mock.patch('builtins.print'):
+        try:
+            main(['404868629100'])
+        except SystemExit:
+            pass
+        print.assert_called_once_with(
+                '404868629100','is not ISBN10 obviously.')
+
+    #expect almost number only ERROR
+    with mock.patch('builtins.print'):
+        try:
+            main(['4O48686291'])
+        except SystemExit:
+            pass
+        print.assert_called_once_with(
+                'Error: Not a number is included in the 9 numbers.')
+
+    #expect ISBN10 check digit is number or X ERROR
+    with mock.patch('builtins.print'):
+        try:
+            main(['404868629Z'])
+        except SystemExit:
+            pass
+        print.assert_called_once_with(
+                'Error: Not a number or X is included in the checkdigit.')
+
+    #expect ISBN10 check digit ERROR
+    with mock.patch('builtins.print'):
+        try:
+            main(['4048686292'])
+        except SystemExit:
+            pass
+        print.assert_called_once_with('Error: Invalid checkdigit.')
+
+    print('ok')
+
+
 if __name__ == '__main__':
     main(sys.argv[1:])
