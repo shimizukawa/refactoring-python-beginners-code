@@ -59,11 +59,11 @@ def main(args):
     # calc new(for ISBN13) checkdigit
     isbn12 = '978' + isbn[:9]
     ncdigit = 0
-    for idx in range(len(isbn12)):
+    for idx, x in enumerate(isbn12):
         if idx % 2:
-            ncdigit += int(isbn12[idx]) * 3
+            ncdigit += int(x) * 3
         else:
-            ncdigit += int(isbn12[idx])
+            ncdigit += int(x)
 
     ncdigit = 10 - (ncdigit % 10)
 
