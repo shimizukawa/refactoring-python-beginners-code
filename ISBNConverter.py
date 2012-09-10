@@ -58,7 +58,7 @@ def main(args):
 
     # result output
     print("ISBN10:", isbn);
-    print("ISBN13:", "978{0}{1}".format(isbn[:9], ncdigit))
+    print("ISBN13:", "{0}{1}".format(isbn12, ncdigit))
 
 
 def test():
