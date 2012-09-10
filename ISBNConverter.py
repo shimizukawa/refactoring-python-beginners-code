@@ -55,19 +55,19 @@ def make_isbn13_from_isbn10(isbn10):
     return isbn12 + cdigit
 
 
-def main(args):
-    # remove '-' characters from args[0]
+def main(isbn10):
+    # remove '-' characters from isbn10
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
-    isbn = args[0].replace("-", "")
+    isbn10 = isbn10.replace("-", "")
 
     # calc and check the checkdigit
-    validate_isbn10(isbn)
+    validate_isbn10(isbn10)
 
     # calc new(for ISBN13) checkdigit
-    isbn13 = make_isbn13_from_isbn10(isbn)
+    isbn13 = make_isbn13_from_isbn10(isbn10)
 
     # result output
-    print("ISBN10:", isbn)
+    print("ISBN10:", isbn10)
     print("ISBN13:", isbn13)
 
 
@@ -81,14 +81,14 @@ def test():
 
     #expect SUCCESS
     with mock.patch('builtins.print'):
-        main(['4048686291'])
+        main('4048686291')
         print.assert_has_calls([mock.call('ISBN10:','4048686291'),
                                 mock.call('ISBN13:','9784048686297')])
 
     #expect length mismatch ERROR
     with mock.patch('builtins.print'):
         try:
-            main(['404868629100'])
+            main('404868629100')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -97,7 +97,7 @@ def test():
     #expect almost number only ERROR
     with mock.patch('builtins.print'):
         try:
-            main(['4O48686291'])
+            main('4O48686291')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -106,7 +106,7 @@ def test():
     #expect ISBN10 check digit is number or X ERROR
     with mock.patch('builtins.print'):
         try:
-            main(['404868629Z'])
+            main('404868629Z')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -115,7 +115,7 @@ def test():
     #expect ISBN10 check digit ERROR
     with mock.patch('builtins.print'):
         try:
-            main(['4048686292'])
+            main('4048686292')
         except SystemExit:
             pass
         print.assert_called_once_with('Error: Invalid checkdigit.')
@@ -124,5 +124,5 @@ def test():
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main(sys.argv[1])
 
