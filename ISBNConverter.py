@@ -22,6 +22,24 @@ def calc_isbn10_checkdigit(isbn10):
 
 def validate_isbn10(isbn10):
     """check the checkdigit"""
+
+    # ISBN10 validation
+    if len(isbn10) != 10:
+        print(isbn10, "is not ISBN10 obviously.")
+        sys.exit(0)
+
+    # check for isbn10[0:9] which is the first 9 numbers
+    # Note: Strictly check the numbers.
+    if not isbn10[:9].isdigit():
+        print("Error: Not a number is included in the 9 numbers.")
+        sys.exit(0)
+
+    # check for isbn10[9] which is the checkdigit
+    # Note: Strictly check the number.
+    if not (isbn10[9].isdigit() or isbn10[9] == 'X'):
+        print("Error: Not a number or X is included in the checkdigit.")
+        sys.exit(0)
+
     cdigit = calc_isbn10_checkdigit(isbn10)
     if cdigit != isbn10[9]:
         print("Error: Invalid checkdigit.")
@@ -34,23 +52,6 @@ def main(args):
     # remove '-' characters from args[0]
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
     isbn = args[0].replace("-", "")
-
-    # ISBN10 validation
-    if len(isbn) != 10:
-        print(isbn, "is not ISBN10 obviously.")
-        sys.exit(0)
-
-    # check for isbn[0:9] which is the first 9 numbers
-    # Note: Strictly check the numbers.
-    if not isbn[:9].isdigit():
-        print("Error: Not a number is included in the 9 numbers.")
-        sys.exit(0)
-
-    # check for isbn[9] which is the checkdigit
-    # Note: Strictly check the number.
-    if not (isbn[9].isdigit() or isbn[9] == 'X'):
-        print("Error: Not a number or X is included in the checkdigit.")
-        sys.exit(0)
 
     # calc and check the checkdigit
     validate_isbn10(isbn)
