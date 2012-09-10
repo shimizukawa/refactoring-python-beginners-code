@@ -4,6 +4,7 @@ LICENSE: GPLv3
 """
 
 import sys
+from itertools import cycle
 
 
 def char2digit(x):
@@ -59,8 +60,8 @@ def main(args):
     # calc new(for ISBN13) checkdigit
     isbn12 = '978' + isbn[:9]
     ncdigit = 0
-    for idx, x in enumerate(isbn12):
-        ncdigit += int(x) * (3 if (idx % 2) else 1)
+    for x, y in zip(isbn12, cycle([1,3])):
+        ncdigit += int(x) * y
 
     ncdigit = 10 - (ncdigit % 10)
 
