@@ -19,6 +19,16 @@ def calc_isbn10_checkdigit(isbn10):
     return cdigit
 
 
+def validate_isbn10(isbn10):
+    """check the checkdigit"""
+    cdigit = calc_isbn10_checkdigit(isbn10)
+    if cdigit != isbn10[9]:
+        print("Error: Invalid checkdigit.")
+        sys.exit(0)
+
+    return True
+
+
 def main(args):
     # remove '-' characters from args[0]
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
@@ -43,11 +53,8 @@ def main(args):
 
     # calc and check the checkdigit
     iisbn = [char2digit(x) for x in isbn]
-    cdigit = calc_isbn10_checkdigit(iisbn)
+    validate_isbn10(iisbn)
 
-    if cdigit != iisbn[9]:
-        print("Error: Invalid checkdigit.")
-        sys.exit(0)
 
     # calc new(for ISBN13) checkdigit
     ncdigit = 9 * 1 + 7 * 3 + 8 * 1
