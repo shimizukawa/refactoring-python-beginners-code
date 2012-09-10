@@ -33,10 +33,10 @@ def main(args):
     if cisbn[9] == 'X':
         iisbn[9] = 10
     else:
-        iisbn[9] = int(cisbn[9])
         if not cisbn[9].isdigit():
             print("Error: Not a number or X is included in the checkdigit.")
             sys.exit(0)
+        iisbn[9] = int(cisbn[9])
 
     # calc and check the checkdigit
     cdigit = 0;
