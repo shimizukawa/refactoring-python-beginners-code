@@ -13,6 +13,12 @@ def calc_isbn10_checkdigit(isbn10):
     cdigit = 11 - (cdigit % 11)
     return "0123456789X"[cdigit]
 
+def calc_isbn13_checkdigit(isbn13):
+    """calc the check-digit for isbn13"""
+    ncdigit = sum(x * y for x, y in zip(map(int, isbn13[:12]), cycle([1,3])))
+    ncdigit = 10 - (ncdigit % 10)
+    return "0123456789X"[ncdigit]
+
 
 def validate_isbn10(isbn10):
     """check the checkdigit"""
@@ -53,12 +59,12 @@ def main(args):
 
     # calc new(for ISBN13) checkdigit
     isbn12 = '978' + isbn[:9]
-    ncdigit = sum(x * y for x, y in zip(map(int, isbn12), cycle([1,3])))
-    ncdigit = 10 - (ncdigit % 10)
+    cdigit = calc_isbn13_checkdigit(isbn12)
+    isbn13 = isbn12 + cdigit
 
     # result output
-    print("ISBN10:", isbn);
-    print("ISBN13:", "{0}{1}".format(isbn12, ncdigit))
+    print("ISBN10:", isbn)
+    print("ISBN13:", isbn13)
 
 
 def test():
@@ -115,3 +121,4 @@ def test():
 
 if __name__ == '__main__':
     main(sys.argv[1:])
+
