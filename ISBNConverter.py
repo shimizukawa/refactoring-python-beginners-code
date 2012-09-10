@@ -57,11 +57,14 @@ def main(args):
 
 
     # calc new(for ISBN13) checkdigit
-    ncdigit = 9 * 1 + 7 * 3 + 8 * 1
-    for idx in range(4):
-        ncdigit += 3 * iisbn[idx * 2] + iisbn[idx * 2 + 1]
+    isbn12 = '978' + isbn[:9]
+    ncdigit = 0
+    for idx in range(len(isbn12)):
+        if idx % 2:
+            ncdigit += int(isbn12[idx]) * 3
+        else:
+            ncdigit += int(isbn12[idx])
 
-    ncdigit += 3 * iisbn[8]
     ncdigit = 10 - (ncdigit % 10)
 
     # result output
