@@ -66,9 +66,7 @@ def main(isbn10):
     # calc new(for ISBN13) checkdigit
     isbn13 = make_isbn13_from_isbn10(isbn10)
 
-    # result output
-    print("ISBN10:", isbn10)
-    print("ISBN13:", isbn13)
+    return isbn13
 
 
 def test():
@@ -80,10 +78,7 @@ def test():
     from unittest import mock
 
     #expect SUCCESS
-    with mock.patch('builtins.print'):
-        main('4048686291')
-        print.assert_has_calls([mock.call('ISBN10:','4048686291'),
-                                mock.call('ISBN13:','9784048686297')])
+    assert main('4048686291') == '9784048686297'
 
     #expect length mismatch ERROR
     with mock.patch('builtins.print'):
@@ -124,5 +119,8 @@ def test():
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    isbn13 = main(sys.argv[1])
 
+    # result output
+    print("ISBN10:", isbn10)
+    print("ISBN13:", isbn13)
