@@ -55,7 +55,7 @@ def make_isbn13_from_isbn10(isbn10):
     return isbn12 + cdigit
 
 
-def main(isbn10):
+def convert_isbn10_to_isbn13(isbn10):
     # remove '-' characters from isbn10
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
     isbn10 = isbn10.replace("-", "")
@@ -78,12 +78,12 @@ def test():
     from unittest import mock
 
     #expect SUCCESS
-    assert main('4048686291') == '9784048686297'
+    assert convert_isbn10_to_isbn13('4048686291') == '9784048686297'
 
     #expect length mismatch ERROR
     with mock.patch('builtins.print'):
         try:
-            main('404868629100')
+            convert_isbn10_to_isbn13('404868629100')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -92,7 +92,7 @@ def test():
     #expect almost number only ERROR
     with mock.patch('builtins.print'):
         try:
-            main('4O48686291')
+            convert_isbn10_to_isbn13('4O48686291')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -101,7 +101,7 @@ def test():
     #expect ISBN10 check digit is number or X ERROR
     with mock.patch('builtins.print'):
         try:
-            main('404868629Z')
+            convert_isbn10_to_isbn13('404868629Z')
         except SystemExit:
             pass
         print.assert_called_once_with(
@@ -110,7 +110,7 @@ def test():
     #expect ISBN10 check digit ERROR
     with mock.patch('builtins.print'):
         try:
-            main('4048686292')
+            convert_isbn10_to_isbn13('4048686292')
         except SystemExit:
             pass
         print.assert_called_once_with('Error: Invalid checkdigit.')
@@ -119,7 +119,7 @@ def test():
 
 
 if __name__ == '__main__':
-    isbn13 = main(sys.argv[1])
+    isbn13 = convert_isbn10_to_isbn13(sys.argv[1])
 
     # result output
     print("ISBN10:", isbn10)
