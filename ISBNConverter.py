@@ -35,9 +35,7 @@ def main(args):
 
     # calc and check the checkdigit
     cdigit = sum((10 - i) * x for i,x in enumerate(iisbn[:9]))
-
-    cdigit = cdigit % 11
-    cdigit = 11 - cdigit
+    cdigit = 11 - (cdigit % 11)
 
     if cdigit != iisbn[9]:
         print("Error: Invalid checkdigit.")
