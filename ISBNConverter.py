@@ -15,15 +15,13 @@ def char2digit(x):
 
 def calc_isbn10_checkdigit(isbn10):
     """calc the check-digit for isbn10"""
-    cdigit = sum((10 - i) * x for i,x in enumerate(isbn10[:9]))
+    cdigit = sum((10 - i) * x for i,x in enumerate(map(int, isbn10[:9])))
     cdigit = 11 - (cdigit % 11)
-    return cdigit
+    return "0123456789X"[cdigit]
 
 
 def validate_isbn10(isbn10):
     """check the checkdigit"""
-    isbn10 = [char2digit(x) for x in isbn10]
-
     cdigit = calc_isbn10_checkdigit(isbn10)
     if cdigit != isbn10[9]:
         print("Error: Invalid checkdigit.")
