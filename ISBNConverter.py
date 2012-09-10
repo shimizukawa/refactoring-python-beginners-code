@@ -12,6 +12,13 @@ def char2digit(x):
     return int(x)
 
 
+def calc_isbn10_checkdigit(isbn10):
+    """calc the check-digit for isbn10"""
+    cdigit = sum((10 - i) * x for i,x in enumerate(isbn10[:9]))
+    cdigit = 11 - (cdigit % 11)
+    return cdigit
+
+
 def main(args):
     # remove '-' characters from args[0]
     # Note: Anywhere, Any numbers of Hyphen can be accepted.
@@ -36,8 +43,7 @@ def main(args):
 
     # calc and check the checkdigit
     iisbn = [char2digit(x) for x in isbn]
-    cdigit = sum((10 - i) * x for i,x in enumerate(iisbn[:9]))
-    cdigit = 11 - (cdigit % 11)
+    cdigit = calc_isbn10_checkdigit(iisbn)
 
     if cdigit != iisbn[9]:
         print("Error: Invalid checkdigit.")
