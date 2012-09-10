@@ -35,8 +35,8 @@ def main(args):
 
     # calc and check the checkdigit
     cdigit = 0;
-    for idx in range(9):
-        cdigit += (10 - idx) * iisbn[idx]
+    for idx, x in enumerate(iisbn[:9])
+        cdigit += (10 - idx) * x
 
     cdigit = cdigit % 11
     cdigit = 11 - cdigit
