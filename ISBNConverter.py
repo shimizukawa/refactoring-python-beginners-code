@@ -7,12 +7,6 @@ import sys
 from itertools import cycle
 
 
-def char2digit(x):
-    if x == 'X':
-        return 10
-    return int(x)
-
-
 def calc_isbn10_checkdigit(isbn10):
     """calc the check-digit for isbn10"""
     cdigit = sum((10 - i) * x for i,x in enumerate(map(int, isbn10[:9])))
