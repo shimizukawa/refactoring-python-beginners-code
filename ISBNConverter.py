@@ -34,9 +34,7 @@ def main(args):
         iisbn.append(int(isbn[9]))
 
     # calc and check the checkdigit
-    cdigit = 0;
-    for idx, x in enumerate(iisbn[:9])
-        cdigit += (10 - idx) * x
+    cdigit = sum((10 - i) * x for i,x in enumerate(iisbn[:9]))
 
     cdigit = cdigit % 11
     cdigit = 11 - cdigit
